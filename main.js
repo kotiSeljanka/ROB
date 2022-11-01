@@ -75,11 +75,14 @@ function fetchPoint() {
   fetch('http://localhost:3000/point')
     .then( (res) => res.json() )
     .then( (data) => {
-      console.log(data)
-      addBox(data['x'], data['y'], data['z'] )
+      console.log(data);
+      for (let i = 0; i < data.length; i++) {
+        point = data[i];
+        addPoint(point['x'], point['y'], point['z'])
+      }
     })
     .catch( (err) => {
-      console.log("No more points, probably");
+      console.log("No points, probably");
     })
 }
 
@@ -104,13 +107,14 @@ camera.position.setY(30);
 const material = new THREE.MeshStandardMaterial( { color: 0xFF6347 } );
 
 // POINT
+// Multiplier value for float values coming from data: more understandable scene
 const MULTIPLIER = 10;
 /**
  * Draws a point to the canvas. 
  * Note: altered position data during dev for correct functioning. Might be broken with new data. 
  * @param {Float} x x-axis position
- * @param {Float} y !!! negative z-axis position
- * @param {Float} z !!! y-axis position
+ * @param {Float} y !!! negative z-axis position: negative to flip the dimension to the other side
+ * @param {Float} z !!! y-axis position: no clue why this is, yet
  */
 function addPoint(x, y, z) {
   const pointGeometry = new THREE.SphereGeometry( 0.3 );

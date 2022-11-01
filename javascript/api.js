@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser'; 
 import cors from 'cors';
 
 const PORT = 3000
@@ -12,6 +13,9 @@ app.use(
         origin: "*",
     })
 )
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Fetch one point and remove it from the storage
 app.get("/point", (req, res) => {
   const resPoint = newPoints.shift();
@@ -35,10 +39,31 @@ app.get("/addRandom", (req, res) => {
 })
 // Get all the points currently saved
 app.get("/all", (req, res) => {
-    res.json({
-        'points': newPoints
-    })
-    console.log("Showing points")
+    if (newPoints.length === 0) {
+      res.sendStatus(418);
+      console.log("Points empty")
+    } else {
+      res.json(newPoints);
+      newPoints = [];
+      console.log("Showing all points");
+    }
+})
+// Add an xyz-point to the storage
+app.post("/addPoint", (req, res) => {
+  const data = req.body;
+  console.log( data );
+  if(data.length == undefined || data.length === 0 ){
+    res.sendStatus(416)
+    console.log("someone tried to do invalid post request 😏")
+  }
+  else{
+    for (let i = 0; i < data.length; i++) {
+      newPoints.push(data[i]);
+    }
+    res.sendStatus(200)
+    console.log( `added ${data.length} points via post request`)
+  }
 })
 
 app.listen(PORT);
+console.log(`Listening to port ${PORT}`)
