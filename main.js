@@ -72,14 +72,13 @@ function fetchData(fileName) {
  * Fetch point from API, draw it to the canvas
  */
 function fetchPoint() {
-  fetch('http://localhost:3000/point')
+  fetch('http://localhost:3000/all')
     .then( (res) => res.json() )
     .then( (data) => {
-      console.log(data);
       for (let i = 0; i < data.length; i++) {
-        point = data[i];
-        addPoint(point['x'], point['y'], point['z'])
+        addPoint(data[i]['x'],data[i]['y'],data[i]['z'])
       }
+      console.log("Drawn")
     })
     .catch( (err) => {
       console.log("No points, probably");

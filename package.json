@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "api": "node .\\javascript\\api.js",
-    "marathon": "wt -d . powershell -noExit npm run api & wt -d . powershell -noExit npm run dev"
+    "reminder": "echo Remember to terminate each batch separately!",
+    "marathon": "wt -d . powershell -noExit npm run api & wt -d . powershell -noExit npm run dev & npm run reminder"
   },
   "devDependencies": {
     "vite": "^3.1.0"

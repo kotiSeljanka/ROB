@@ -44,7 +44,7 @@ app.get("/all", (req, res) => {
       console.log("Points empty")
     } else {
       res.json(newPoints);
-      newPoints = [];
+      newPoints = [];  
       console.log("Showing all points");
     }
 })
