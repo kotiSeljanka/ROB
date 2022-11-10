@@ -64,6 +64,32 @@ app.post("/addPoint", (req, res) => {
     console.log( `added ${data.length} points via post request`)
   }
 })
+app.post("/extAddPoint", (req, res) => {
+  const data = req.body;
+  console.log( data );
+  if(data == undefined ){
+    res.sendStatus(416)
+    console.log("someone tried to do invalid post request 😏")
+  }
+  else{
+    const keys = Object.keys(data);
+    for (let i = 0; i < keys.length; i++) {
+      const innerArray = data[keys[i]]
+      for (let y = 0; y < innerArray.length; y++) {
+        const newObj = {
+          'x': innerArray[y][0],
+          'y': innerArray[y][1],
+          'z': innerArray[y][2]
+        };
+        newPoints.push(newObj);
+        console.log(newObj);
+      }
+    }
+    res.sendStatus(200)
+    console.log( `added some points via post request`)
+  }
+
+})
 
 app.listen(PORT);
 console.log(`Listening to port ${PORT}`)
