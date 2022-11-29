@@ -118,7 +118,7 @@ const MULTIPLIER = 10;
 function addPoint(x, y, z) {
   const pointGeometry = new THREE.SphereGeometry( 0.3 );
   const point = new THREE.Mesh( pointGeometry, material );
-  point.position.set(x*MULTIPLIER, -z*MULTIPLIER+30, y*MULTIPLIER);
+  point.position.set(x*MULTIPLIER, z*MULTIPLIER+30, y*MULTIPLIER);   // z was broken with new data 
   scene.add(point);  
 }
 
